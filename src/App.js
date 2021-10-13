@@ -1,32 +1,32 @@
 import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
 import "./App.css";
 import EachScoreTable from "./EachScoreTable";
 import allCountryScores from "./scores";
 
-let isAToZ = -1;
-let buttonText = "A-Z";
 function App() {
   const [orderList, setOrderList] = useState(allCountryScores);
+  const [alphabetOrder, setAlphabetOrder] = useState(-1);
 
   function changeOrder() {
     setOrderList(() =>
-      [...allCountryScores].sort((a, b) => {
-        return a.name.toUpperCase() < b.name.toUpperCase()
-          ? isAToZ
-          : -1 * isAToZ;
+      [...orderList].sort((a, b) => {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return alphabetOrder;
+        }
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+          return -1 * alphabetOrder;
+        }
+        return 0;
       })
     );
-    isAToZ *= -1;
+    setAlphabetOrder(alphabetOrder * -1);
   }
-
-  useEffect(() => (buttonText = isAToZ === -1 ? "A-Z" : "Z-A"));
 
   return (
     <div className="App">
       <section className="scoreContainer">
         <button className="orderList" onClick={changeOrder}>
-          Sort: {buttonText}
+          Sort: {alphabetOrder === -1 ? "A-Z" : "Z-A"}
         </button>
         <h2>High Scores per Country</h2>
         {orderList.map((country) => (
