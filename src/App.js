@@ -2,9 +2,12 @@ import { useState } from "react";
 import "./App.css";
 import EachScoreTable from "./EachScoreTable";
 import allCountryScores from "./scores";
+import WorldWideScores from "./WorldWideScores";
 
 function App() {
-  const [orderList, setOrderList] = useState(allCountryScores);
+  const [orderList, setOrderList] = useState(
+    allCountryScores
+  );
   const [alphabetOrder, setAlphabetOrder] = useState(-1);
 
   function changeOrder() {
@@ -30,8 +33,17 @@ function App() {
         </button>
         <h2>High Scores per Country</h2>
         {orderList.map((country) => (
-          <EachScoreTable key={country.name} country={country} />
+          <EachScoreTable
+            key={country.name}
+            country={country}
+          />
         ))}
+      </section>
+      <section className="scoreContainer">
+        <h2>WORLD WIDE</h2>
+        <WorldWideScores
+          allCountryScores={allCountryScores}
+        />
       </section>
     </div>
   );
